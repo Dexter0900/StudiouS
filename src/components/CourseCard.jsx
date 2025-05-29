@@ -1,7 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import BookmarkButton from "./BookmarkButton";
 
-const CourseCard = ({ title, description, subject, downloadLink }) => {
+const CourseCard = ({
+  title,
+  description,
+  subject,
+  downloadLink,
+  isBookmarked,
+  onToggleBookmark,
+}) => {
   // Function to determine badge color based on subject
   const getBadgeColor = (subject) => {
     const colors = {
@@ -19,7 +27,7 @@ const CourseCard = ({ title, description, subject, downloadLink }) => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 hover:shadow-xl">
       <div className="p-6 space-y-4">
-        {/* Subject Badge */}
+        {/* Subject Badge and Bookmark Button */}
         <div className="flex justify-between items-start">
           <span
             className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getBadgeColor(
@@ -28,6 +36,10 @@ const CourseCard = ({ title, description, subject, downloadLink }) => {
           >
             {subject}
           </span>
+          <BookmarkButton
+            isBookmarked={isBookmarked}
+            onToggle={onToggleBookmark}
+          />
         </div>
 
         {/* Title */}
@@ -73,6 +85,13 @@ CourseCard.propTypes = {
   description: PropTypes.string.isRequired,
   subject: PropTypes.string.isRequired,
   downloadLink: PropTypes.string.isRequired,
+  isBookmarked: PropTypes.bool,
+  onToggleBookmark: PropTypes.func,
+};
+
+CourseCard.defaultProps = {
+  isBookmarked: false,
+  onToggleBookmark: () => {},
 };
 
 export default CourseCard;

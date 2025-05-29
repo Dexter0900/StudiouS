@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CourseCard from "./CourseCard";
+import { useBookmarks } from "../context/BookmarkContext";
 
 const CourseList = ({ courses }) => {
+  const { toggleBookmark, isBookmarked } = useBookmarks();
+
   if (!courses?.length) {
     return (
       <div className="min-h-[400px] flex items-center justify-center bg-gray-50 rounded-lg">
@@ -42,6 +45,8 @@ const CourseList = ({ courses }) => {
             description={course.description}
             subject={course.subject}
             downloadLink={course.downloadLink}
+            isBookmarked={isBookmarked(course.id)}
+            onToggleBookmark={() => toggleBookmark(course.id)}
           />
         ))}
       </div>
