@@ -1,16 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className={`sticky top-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? "bg-gradient-to-r from-purple-600/95 to-indigo-600/95 backdrop-blur-md shadow-lg" 
+        : "bg-gradient-to-r from-purple-600 to-indigo-600"
+    }`}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Brand */}
           <div className="flex-shrink-0 flex items-center">
             <Link
               to="/"
-              className="text-xl font-bold text-indigo-600 cursor-pointer"
+              className="text-2xl font-bold text-white hover:text-purple-200 transition-colors duration-300 cursor-pointer"
             >
               StudiouS
             </Link>
@@ -21,37 +40,37 @@ const Navbar = () => {
             <div className="flex items-center space-x-8">
               <Link
                 to="/"
-                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
               >
                 Home
               </Link>
               <Link
                 to="/about"
-                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
               >
                 About
               </Link>
               <Link
                 to="/courses"
-                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
               >
                 Courses
               </Link>
               <Link
                 to="/contact"
-                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
               >
                 Contact
               </Link>
               <Link
                 to="/bookmarks"
-                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
               >
                 Bookmarks
               </Link>
               <Link
                 to="/admin"
-                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
               >
                 Admin
               </Link>
@@ -62,13 +81,13 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <Link
               to="/login"
-              className="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none"
+              className="px-4 py-2 text-sm font-medium text-white hover:text-purple-200 focus:outline-none transition-colors duration-300"
             >
               Login
             </Link>
             <Link
               to="/signup"
-              className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="px-4 py-2 text-sm font-medium text-indigo-600 bg-white rounded-md hover:bg-purple-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-300 hover:scale-105"
             >
               Sign Up
             </Link>
@@ -76,7 +95,7 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="flex items-center md:hidden">
-            <button className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-indigo-600 focus:outline-none">
+            <button className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 focus:outline-none transition-colors duration-300">
               <svg
                 className="h-6 w-6"
                 fill="none"

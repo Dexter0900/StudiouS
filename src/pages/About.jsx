@@ -80,7 +80,7 @@ const About = () => {
                 </li>
               </ul>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg">
+            <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 What We Offer
               </h2>
