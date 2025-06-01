@@ -1,5 +1,57 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+
+const MagneticNavLink = ({ to, children }) => {
+  const linkRef = useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    if (!linkRef.current) return;
+    
+    const rect = linkRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    
+    // Calculate distance from center with a larger activation region (100px)
+    const distance = Math.sqrt(x * x + y * y);
+    const maxDistance = 100; // Increased activation region
+    
+    if (distance < maxDistance) {
+      // Increased strength for more noticeable effect
+      const strength = (1 - distance / maxDistance) * 25;
+      const angle = Math.atan2(y, x);
+      const moveX = Math.cos(angle) * strength;
+      const moveY = Math.sin(angle) * strength;
+      
+      setPosition({ x: moveX, y: moveY });
+    } else {
+      setPosition({ x: 0, y: 0 });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  return (
+    <div 
+      className="relative"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Link
+        ref={linkRef}
+        to={to}
+        className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 block"
+        style={{
+          transform: `translate(${position.x}px, ${position.y}px)`,
+        }}
+      >
+        {children}
+      </Link>
+    </div>
+  );
+};
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,42 +90,12 @@ const Navbar = () => {
           {/* Navigation Links - Centered */}
           <div className="hidden md:flex items-center justify-center flex-1 mx-8">
             <div className="flex items-center space-x-8">
-              <Link
-                to="/"
-                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Home
-              </Link>
-              <Link
-                to="/about"
-                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                About
-              </Link>
-              <Link
-                to="/courses"
-                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Courses
-              </Link>
-              <Link
-                to="/contact"
-                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Contact
-              </Link>
-              <Link
-                to="/bookmarks"
-                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Bookmarks
-              </Link>
-              <Link
-                to="/admin"
-                className="text-white hover:text-purple-200 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Admin
-              </Link>
+              <MagneticNavLink to="/">Home</MagneticNavLink>
+              <MagneticNavLink to="/about">About</MagneticNavLink>
+              <MagneticNavLink to="/courses">Courses</MagneticNavLink>
+              <MagneticNavLink to="/contact">Contact</MagneticNavLink>
+              <MagneticNavLink to="/bookmarks">Bookmarks</MagneticNavLink>
+              <MagneticNavLink to="/admin">Admin</MagneticNavLink>
             </div>
           </div>
 
