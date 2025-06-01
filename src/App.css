@@ -1,17 +1,9 @@
 @import "tailwindcss";
 
-#root {
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-}
-
-/* Additional styles for smooth transitions */
 .nav-link {
   transition: all 0.2s ease-in-out;
 }
 
-/* Custom scrollbar for dropdown */
 .dropdown-menu::-webkit-scrollbar {
   width: 6px;
 }
@@ -29,7 +21,6 @@
   background: #555;
 }
 
-/* Mobile menu animation */
 @keyframes slideDown {
   from {
     transform: translateY(-10px);
