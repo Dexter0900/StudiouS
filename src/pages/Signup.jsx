@@ -10,7 +10,6 @@ const Signup = () => {
       <main className="flex-grow">
         <SignupForm />
       </main>
-      <Footer />
     </div>
   );
 };
