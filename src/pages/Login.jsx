@@ -10,7 +10,6 @@ const Login = () => {
       <main className="flex-grow">
         <LoginForm />
       </main>
-      <Footer />
     </div>
   );
 };
