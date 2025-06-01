@@ -24,9 +24,8 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus({ type: "loading", message: "Sending message..." });
-
-    // Here you would typically make an API call to your backend
-    // For now, we'll simulate a successful submission
+    
+    // Simulate an API call
     setTimeout(() => {
       setStatus({
         type: "success",
