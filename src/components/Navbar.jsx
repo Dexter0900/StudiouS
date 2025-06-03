@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // 👈 for mobile menu
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,14 +19,16 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`sticky top-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? "bg-gradient-to-r from-purple-600/95 to-indigo-600/95 backdrop-blur-md shadow-lg" 
-        : "bg-gradient-to-r from-purple-600 to-indigo-600"
-    }`}>
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-gradient-to-r from-purple-600/95 to-indigo-600/95 backdrop-blur-md shadow-lg"
+          : "bg-gradient-to-r from-purple-600 to-indigo-600"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          {/* Logo/Brand */}
+          {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link
               to="/"
@@ -35,73 +38,40 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Navigation Links - Centered */}
+          {/* Desktop Links */}
           <div className="hidden md:flex items-center justify-center flex-1 mx-8">
-            <div className="flex items-center">
-              <Link
-                to="/"
-                className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Home
-              </Link>
-              <div className="h-4 w-px bg-white/20 mx-2"></div>
-              <Link
-                to="/about"
-                className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                About
-              </Link>
-              <div className="h-4 w-px bg-white/20 mx-2"></div>
-              <Link
-                to="/courses"
-                className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Courses
-              </Link>
-              <div className="h-4 w-px bg-white/20 mx-2"></div>
-              <Link
-                to="/contact"
-                className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Contact
-              </Link>
-              <div className="h-4 w-px bg-white/20 mx-2"></div>
-              <Link
-                to="/bookmarks"
-                className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Bookmarks
-              </Link>
-              <div className="h-4 w-px bg-white/20 mx-2"></div>
-              <Link
-                to="/admin"
-                className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-              >
-                Admin
-              </Link>
+            <div className="flex items-center space-x-2">
+              <NavLink to="/" label="Home" />
+              <NavLink to="/about" label="About" />
+              <NavLink to="/courses" label="Courses" />
+              <NavLink to="/contact" label="Contact" />
+              <NavLink to="/bookmarks" label="Bookmarks" />
+              <NavLink to="/admin" label="Admin" />
             </div>
           </div>
 
-          {/* Auth Buttons */}
+          {/* Auth Buttons - Desktop */}
           <div className="hidden md:flex items-center space-x-4">
             <Link
               to="/login"
-              className="px-4 py-2 text-sm font-medium text-white hover:text-purple-200 focus:outline-none transition-colors duration-300"
+              className="px-4 py-2 text-sm font-medium text-white hover:text-purple-200 transition-colors duration-300"
             >
               Login
             </Link>
-            <div className="h-4 w-px bg-white/20"></div>
             <Link
               to="/signup"
-              className="px-4 py-2 text-sm font-medium text-indigo-600 bg-white rounded-md hover:bg-purple-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-300 hover:scale-105"
+              className="px-4 py-2 text-sm font-medium text-indigo-600 bg-white rounded-md hover:bg-purple-100 focus:outline-none transition-all duration-300 hover:scale-105"
             >
               Sign Up
             </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="flex items-center md:hidden">
-            <button className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 focus:outline-none transition-colors duration-300">
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 focus:outline-none"
+            >
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -112,15 +82,54 @@ const Navbar = () => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
+                  d={
+                    isMenuOpen
+                      ? "M6 18L18 6M6 6l12 12"
+                      : "M4 6h16M4 12h16M4 18h16"
+                  }
                 />
               </svg>
             </button>
           </div>
         </div>
+
+        {/* Mobile Menu Content */}
+        {isMenuOpen && (
+          <div className="md:hidden px-4 pb-4">
+            <div className="flex flex-col space-y-2">
+              <NavLink to="/" label="Home" />
+              <NavLink to="/about" label="About" />
+              <NavLink to="/courses" label="Courses" />
+              <NavLink to="/contact" label="Contact" />
+              <NavLink to="/bookmarks" label="Bookmarks" />
+              <NavLink to="/admin" label="Admin" />
+              <Link
+                to="/login"
+                className="text-white px-4 py-2 rounded hover:bg-white/10"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="bg-white text-indigo-600 px-4 py-2 rounded hover:bg-purple-100"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
 };
+
+const NavLink = ({ to, label }) => (
+  <Link
+    to={to}
+    className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
+  >
+    {label}
+  </Link>
+);
 
 export default Navbar;
