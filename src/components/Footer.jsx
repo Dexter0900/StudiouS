@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = () => {
+const Footer = ({ setIsActive }) => {
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
@@ -99,9 +99,12 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <button
+                  onClick={setIsActive}
+                  className="hover:text-white cursor-pointer"
+                >
                   Contact Us
-                </a>
+                </button>
               </li>
             </ul>
           </div>

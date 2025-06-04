@@ -10,13 +10,13 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4 text-start">
               About StudiouS
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            {/* <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Empowering learners worldwide with comprehensive educational
               resources and tools for success.
-            </p>
+            </p> */}
           </div>
 
           {/* Mission Section */}

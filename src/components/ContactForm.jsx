@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ContactForm = () => {
+const ContactForm = ({ setIsActive }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,7 +24,7 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus({ type: "loading", message: "Sending message..." });
-    
+
     // Simulate an API call
     setTimeout(() => {
       setStatus({
@@ -41,14 +41,36 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md border border-gray-200">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">Contact Us</h2>
-      <p className="text-gray-600 mb-8">
+    <div className="max-w-lg mx-auto p-4 bg-white rounded-lg shadow-md border border-gray-200">
+      <h2 className="flex items-center justify-between text-2xl md:text-3xl font-bold text-gray-800">
+        Contact Us
+        {/* Toggle Button */}
+        <button
+          onClick={setIsActive}
+          className="p-2 md:bg-white rounded-full cursor-pointer md:border border-gray-400 hover:shadow-lg transition duration-300 hover:scale-110"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-black"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </h2>
+      <p className="text-gray-600 my-4 text-sm md:text-base">
         Have a question or want to get in touch? Fill out the form below and
         we'll get back to you as soon as possible.
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label
             htmlFor="name"
@@ -63,7 +85,7 @@ const ContactForm = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-1 placeholder:text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Your name"
           />
         </div>
@@ -82,7 +104,7 @@ const ContactForm = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-1 border placeholder:text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="your.email@example.com"
           />
         </div>
@@ -101,7 +123,7 @@ const ContactForm = () => {
             value={formData.subject}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-1 border placeholder:text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="What is this regarding?"
           />
         </div>
@@ -119,8 +141,8 @@ const ContactForm = () => {
             value={formData.message}
             onChange={handleChange}
             required
-            rows={6}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            rows={4}
+            className="mt-1 block w-full px-3 py-2 border placeholder:text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Write your message here..."
           />
         </div>

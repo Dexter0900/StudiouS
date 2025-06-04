@@ -44,7 +44,6 @@ const Navbar = () => {
               <NavLink to="/" label="Home" />
               <NavLink to="/about" label="About" />
               <NavLink to="/courses" label="Courses" />
-              <NavLink to="/contact" label="Contact" />
               <NavLink to="/bookmarks" label="Bookmarks" />
               <NavLink to="/admin" label="Admin" />
             </div>
@@ -100,7 +99,6 @@ const Navbar = () => {
               <NavLink to="/" label="Home" />
               <NavLink to="/about" label="About" />
               <NavLink to="/courses" label="Courses" />
-              <NavLink to="/contact" label="Contact" />
               <NavLink to="/bookmarks" label="Bookmarks" />
               <NavLink to="/admin" label="Admin" />
               <Link
