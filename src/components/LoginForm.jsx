@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase.config"; // 👈 Make sure this path is correct
 
 const LoginForm = () => {
+  const navigate = useNavigate(); // ✅ Ensure useNavigate is imported correctly
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,7 +19,6 @@ const LoginForm = () => {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -25,15 +29,12 @@ const LoginForm = () => {
 
   const validateForm = () => {
     const newErrors = {};
-
-    // Email validation
     if (!formData.email) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
-    // Password validation
     if (!formData.password) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
@@ -55,22 +56,20 @@ const LoginForm = () => {
     }
 
     try {
-      // Add your login logic here
-      console.log("Form submitted:", formData);
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      console.log("Login successful ✅");
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // ✅ Redirect to home page
+      navigate("/");
 
-      // Reset form after successful submission
       setFormData({ email: "", password: "" });
     } catch (error) {
       console.error("Login error:", error);
-      setErrors({ submit: "Failed to login. Please try again." });
+      setErrors({ submit: error.message });
     } finally {
       setIsSubmitting(false);
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-200">
@@ -198,5 +197,4 @@ const LoginForm = () => {
     </div>
   );
 };
-
 export default LoginForm;

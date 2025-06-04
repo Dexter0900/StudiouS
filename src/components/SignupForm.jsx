@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth, db } from "../firebase.config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 const SignupForm = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,7 +21,6 @@ const SignupForm = () => {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -27,21 +32,18 @@ const SignupForm = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Name validation
     if (!formData.name) {
       newErrors.name = "Name is required";
     } else if (formData.name.length < 2) {
       newErrors.name = "Name must be at least 2 characters";
     }
 
-    // Email validation
     if (!formData.email) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
-    // Password validation
     if (!formData.password) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
@@ -66,17 +68,31 @@ const SignupForm = () => {
     }
 
     try {
-      // Add your signup logic here
-      console.log("Form submitted:", formData);
+      // ✅ Firebase Auth: Create User
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // ✅ Firestore: Store extra user data (like name)
+      await setDoc(doc(db, "users", user.uid), {
+        name: formData.name,
+        email: formData.email,
+        createdAt: new Date(),
+      });
+      console.log("Firestore save done"); // <-- yahan tak aa raha hai kya?
 
-      // Reset form after successful submission
+      // ✅ Reset form
       setFormData({ name: "", email: "", password: "" });
+      setErrors({});
+
+      // ✅ Redirect to homepage
+      navigate("/");
     } catch (error) {
-      console.error("Signup error:", error);
-      setErrors({ submit: "Failed to create account. Please try again." });
+      console.error("Signup error:", error.message);
+      setErrors({ submit: error.message });
     } finally {
       setIsSubmitting(false);
     }
@@ -91,11 +107,7 @@ const SignupForm = () => {
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {errors.submit && (
-            <div className="rounded-md bg-red-50 p-4">
-              <p className="text-sm text-red-700">{errors.submit}</p>
-            </div>
-          )}
+          {errors.submit && <div>{errors.submit}</div>}
 
           <div className="space-y-4">
             {/* Name Field */}
