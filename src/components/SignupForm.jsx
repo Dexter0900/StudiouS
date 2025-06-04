@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase.config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -8,7 +8,8 @@ const SignupForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
   });
@@ -32,10 +33,16 @@ const SignupForm = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name) {
-      newErrors.name = "Name is required";
-    } else if (formData.name.length < 2) {
-      newErrors.name = "Name must be at least 2 characters";
+    if (!formData.firstname) {
+      newErrors.firstname = "Name is required";
+    } else if (formData.firstname.length < 2) {
+      newErrors.firstname = "Name must be at least 2 characters";
+    }
+
+    if (!formData.lastname) {
+      newErrors.lastname = "Last name is required";
+    } else if (formData.lastname.length < 2) {
+      newErrors.lastname = "Last name must be at least 2 characters";
     }
 
     if (!formData.email) {
@@ -78,14 +85,15 @@ const SignupForm = () => {
 
       // ✅ Firestore: Store extra user data (like name)
       await setDoc(doc(db, "users", user.uid), {
-        name: formData.name,
+        firstname: formData.firstname,
+        lastname: formData.lastname,
         email: formData.email,
         createdAt: new Date(),
       });
-      console.log("Firestore save done"); // <-- yahan tak aa raha hai kya?
+      console.log("Firestore save done");
 
       // ✅ Reset form
-      setFormData({ name: "", email: "", password: "" });
+      setFormData({ firstname: "", lastname: "", email: "", password: "" });
       setErrors({});
 
       // ✅ Redirect to homepage
@@ -111,32 +119,64 @@ const SignupForm = () => {
 
           <div className="space-y-4">
             {/* Name Field */}
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Full Name
-              </label>
-              <div className="mt-1">
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={`appearance-none relative block w-full px-3 py-2 border ${
-                    errors.name ? "border-red-300" : "border-gray-300"
-                  } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
-                  placeholder="Enter your full name"
-                />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-                )}
+            <>
+              <div>
+                <label
+                  htmlFor="firstname"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  First Name
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="firstname"
+                    name="firstname"
+                    type="text"
+                    autoComplete="firstname"
+                    required
+                    value={formData.firstname}
+                    onChange={handleChange}
+                    className={`appearance-none relative block w-full px-3 py-2 border ${
+                      errors.firstname ? "border-red-300" : "border-gray-300"
+                    } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                    placeholder="Enter your first name"
+                  />
+                  {errors.firstname && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.firstname}
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
+              <div>
+                <label
+                  htmlFor="lastname"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Last Name
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="lastname"
+                    name="lastname"
+                    type="text"
+                    autoComplete="name"
+                    required
+                    value={formData.lastname}
+                    onChange={handleChange}
+                    className={`appearance-none relative block w-full px-3 py-2 border ${
+                      errors.lastname ? "border-red-300" : "border-gray-300"
+                    } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                    placeholder="Enter your last name"
+                  />
+                  {errors.lastname && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.lastname}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </>
 
             {/* Email Field */}
             <div>
@@ -243,12 +283,12 @@ const SignupForm = () => {
         <div className="text-center">
           <p className="text-sm text-gray-600">
             Already have an account?{" "}
-            <a
+            <Link
               href="/login"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </div>
