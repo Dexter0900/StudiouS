@@ -113,40 +113,42 @@ const Navbar = () => {
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex flex-1 justify-center items-center space-x-2 mx-8">
-            {NAV_LINKS.map(renderNavLink)}
-            {/* Desktop Auth/User */}
-            <div className="hidden md:flex items-center space-x-4">
-              {currentUser ? renderUserSection() : renderAuthLinks()}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 focus:outline-none"
-                aria-label="Toggle menu"
-              >
-                {isMenuOpen ? (
-                  <FaTimes className="h-6 w-6" />
-                ) : (
-                  <FaBars className="h-6 w-6" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Menu (animated dropdown) */}
-          <div
-            className={`md:hidden flex flex-col items-center space-y-2 pb-4 transition-max-height duration-300 overflow-hidden ${
-              isMenuOpen ? "max-h-96" : "max-h-0"
-            }`}
-          >
-            <div className="flex flex-col items-center space-y-2 w-full">
+            <div className="flex items-center space-x-2">
               {NAV_LINKS.map(renderNavLink)}
             </div>
-            <div className="flex items-center space-x-4 mt-2">
-              {currentUser ? renderUserSection() : renderAuthLinks()}
-            </div>
+          </div>
+          {/* Desktop Auth/User */}
+          <div className="hidden md:flex items-center space-x-4">
+            {currentUser ? renderUserSection() : renderAuthLinks()}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <FaTimes className="h-6 w-6" />
+              ) : (
+                <FaBars className="h-6 w-6" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu (animated dropdown) */}
+        <div
+          className={`md:hidden flex flex-col items-center space-y-2 pb-4 transition-max-height duration-300 overflow-hidden ${
+            isMenuOpen ? "max-h-96" : "max-h-0"
+          }`}
+        >
+          <div className="flex flex-col items-center space-y-2 w-full">
+            {NAV_LINKS.map(renderNavLink)}
+          </div>
+          <div className="flex items-center space-x-4 mt-2">
+            {currentUser ? renderUserSection() : renderAuthLinks()}
           </div>
         </div>
       </div>
