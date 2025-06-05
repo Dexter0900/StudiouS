@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { FaInfoCircle, FaBookOpen, FaBookmark, FaEnvelope, FaArrowRight } from "react-icons/fa";
 
 const Hero = () => {
   useEffect(() => {
@@ -17,84 +18,28 @@ const Hero = () => {
       description:
         "Learn about our mission to revolutionize education and our commitment to student success.",
       link: "/about",
-      icon: (
-        <svg
-          className="w-12 h-12 text-indigo-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: <FaInfoCircle className="w-12 h-12 text-indigo-600" />,
     },
     {
       title: "Our Courses",
       description:
         "Explore our comprehensive collection of courses designed to help you achieve your learning goals.",
       link: "/courses",
-      icon: (
-        <svg
-          className="w-12 h-12 text-indigo-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-          />
-        </svg>
-      ),
+      icon: <FaBookOpen className="w-12 h-12 text-indigo-600" />,
     },
     {
       title: "Bookmarks",
       description:
         "Save your favorite courses and materials for quick access whenever you need them.",
       link: "/bookmarks",
-      icon: (
-        <svg
-          className="w-12 h-12 text-indigo-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-          />
-        </svg>
-      ),
+      icon: <FaBookmark className="w-12 h-12 text-indigo-600" />,
     },
     {
       title: "Contact Us",
       description:
         "Get in touch with our team for any questions or support you may need.",
       link: "/contact",
-      icon: (
-        <svg
-          className="w-12 h-12 text-indigo-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-          />
-        </svg>
-      ),
+      icon: <FaEnvelope className="w-12 h-12 text-indigo-600" />,
     },
   ];
 
@@ -183,19 +128,7 @@ const Hero = () => {
                     className="inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transform transition duration-300 hover:scale-105 hover:shadow-xl hover:border hover:border-gray-300"
                   >
                     Learn More
-                    <svg
-                      className="ml-2 w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
+                    <FaArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </div>
               </div>
