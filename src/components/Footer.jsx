@@ -165,6 +165,18 @@ const Footer = () => {
           <ContactForm setIsActive={toggleActive} />
         </div>
       </div>
+      {/* Contact Us Pop Up */}
+      <div
+        className={`fixed top-0 flex items-center justify-center w-full h-screen bg-clip-padding backdrop-filter backdrop-blur-sm duration-300 z-50 ${
+          isActive ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+        } `}
+        aria-modal="true"
+        role="dialog"
+      >
+        <div className="p-4">
+          <ContactForm setIsActive={toggleActive} />
+        </div>
+      </div>
     </footer>
   );
 };
