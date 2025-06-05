@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa"; // Add these imports
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
@@ -12,6 +11,7 @@ const NAV_LINKS = [
   { to: "/bookmarks", label: "Bookmarks" },
   { to: "/admin", label: "Admin" },
 ];
+
 const Navbar = () => {
   const auth = getAuth();
 
@@ -86,7 +86,7 @@ const Navbar = () => {
           setIsMenuOpen(false);
           handleLogout();
         }}
-        className="px-4 py-2 text-sm font-medium bg-white text-indigo-600 rounded-md hover:bg-purple-100 transition-all duration-300 hover:scale-105"
+        className="px-4 py-2 text-sm font-medium cursor-pointer bg-white text-indigo-600 rounded-md hover:bg-purple-100 transition-all duration-300 hover:scale-105"
       >
         Logout
       </button>
