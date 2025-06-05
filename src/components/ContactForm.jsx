@@ -99,7 +99,6 @@ const ContactForm = ({ setIsActive }) => {
           </label>
           <input
             type="email"
-            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}

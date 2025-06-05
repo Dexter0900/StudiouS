@@ -1,23 +1,101 @@
 import { useState, useEffect } from "react";
+<<<<<<< Updated upstream
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa"; // Add these imports
+=======
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
+// Common navigation links
+const NAV_LINKS = [
+  { to: "/", label: "Home" },
+  { to: "/about", label: "About" },
+  { to: "/courses", label: "Courses" },
+  { to: "/bookmarks", label: "Bookmarks" },
+  { to: "/admin", label: "Admin" },
+];
+>>>>>>> Stashed changes
 
 const Navbar = () => {
+  const auth = getAuth();
+
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // 👈 for mobile menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null); // Firebase Auth user
 
+  // Detect scroll to apply styles
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 0);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Listen for auth state changes (user login/logout)
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Logout the current user
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      window.location.reload();
+    } catch (err) {
+      console.error("Logout failed:", err.message);
+    }
+  };
+
+  // Render a single nav link
+  const renderNavLink = ({ to, label }) => (
+    <Link
+      key={to}
+      to={to}
+      className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
+      onClick={() => setIsMenuOpen(false)}
+    >
+      {label}
+    </Link>
+  );
+
+  // Render login/signup when user not logged in
+  const renderAuthLinks = () => (
+    <>
+      <Link
+        to="/login"
+        className="px-4 py-2 text-sm font-medium text-white hover:text-purple-200 transition-colors duration-300"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        Login
+      </Link>
+      <Link
+        to="/signup"
+        className="px-4 py-2 text-sm font-medium text-indigo-600 bg-white rounded-md hover:bg-purple-100 focus:outline-none transition-all duration-300 hover:scale-105"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        Sign Up
+      </Link>
+    </>
+  );
+
+  // Render user info + logout when user is logged in
+  const renderUserSection = () => (
+    <div className="flex items-center space-x-4 text-white">
+      <span className="font-medium">Welcome, {currentUser?.displayName}</span>
+      <button
+        onClick={() => {
+          setIsMenuOpen(false);
+          handleLogout();
+        }}
+        className="px-4 py-2 text-sm font-medium bg-white text-indigo-600 rounded-md hover:bg-purple-100 transition-all duration-300 hover:scale-105"
+      >
+        Logout
+      </button>
+    </div>
+  );
 
   return (
     <nav
@@ -30,40 +108,22 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
-            <Link
-              to="/"
-              className="text-2xl font-bold text-white hover:text-purple-200 transition-colors duration-300 cursor-pointer"
-            >
-              StudiouS
-            </Link>
+          <Link
+            to="/"
+            className="text-2xl font-bold text-white hover:text-purple-200 transition-colors duration-300 cursor-pointer"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            StudiouS
+          </Link>
+
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex flex-1 justify-center items-center space-x-2 mx-8">
+            {NAV_LINKS.map(renderNavLink)}
           </div>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center justify-center flex-1 mx-8">
-            <div className="flex items-center space-x-2">
-              <NavLink to="/" label="Home" />
-              <NavLink to="/about" label="About" />
-              <NavLink to="/courses" label="Courses" />
-              <NavLink to="/bookmarks" label="Bookmarks" />
-              <NavLink to="/admin" label="Admin" />
-            </div>
-          </div>
-
-          {/* Auth Buttons - Desktop */}
+          {/* Desktop Auth/User */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link
-              to="/login"
-              className="px-4 py-2 text-sm font-medium text-white hover:text-purple-200 transition-colors duration-300"
-            >
-              Login
-            </Link>
-            <Link
-              to="/signup"
-              className="px-4 py-2 text-sm font-medium text-indigo-600 bg-white rounded-md hover:bg-purple-100 focus:outline-none transition-all duration-300 hover:scale-105"
-            >
-              Sign Up
-            </Link>
+            {currentUser ? renderUserSection() : renderAuthLinks()}
           </div>
 
           {/* Mobile Menu Button */}
@@ -71,6 +131,7 @@ const Navbar = () => {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 focus:outline-none"
+              aria-label="Toggle menu"
             >
               {isMenuOpen ? (
                 <FaTimes className="h-6 w-6" />
@@ -81,42 +142,22 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu Content */}
-        {isMenuOpen && (
-          <div className="md:hidden px-4 pb-4">
-            <div className="flex flex-col space-y-2">
-              <NavLink to="/" label="Home" />
-              <NavLink to="/about" label="About" />
-              <NavLink to="/courses" label="Courses" />
-              <NavLink to="/bookmarks" label="Bookmarks" />
-              <NavLink to="/admin" label="Admin" />
-              <Link
-                to="/login"
-                className="text-white px-4 py-2 rounded hover:bg-white/10"
-              >
-                Login
-              </Link>
-              <Link
-                to="/signup"
-                className="bg-white text-indigo-600 px-4 py-2 rounded hover:bg-purple-100"
-              >
-                Sign Up
-              </Link>
-            </div>
+        {/* Mobile Menu (animated dropdown) */}
+        <div
+          className={`md:hidden flex flex-col items-center space-y-2 pb-4 transition-max-height duration-300 overflow-hidden ${
+            isMenuOpen ? "max-h-96" : "max-h-0"
+          }`}
+        >
+          <div className="flex flex-col items-center space-y-2 w-full">
+            {NAV_LINKS.map(renderNavLink)}
           </div>
-        )}
+          <div className="flex items-center space-x-4 mt-2">
+            {currentUser ? renderUserSection() : renderAuthLinks()}
+          </div>
+        </div>
       </div>
     </nav>
   );
 };
-
-const NavLink = ({ to, label }) => (
-  <Link
-    to={to}
-    className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-  >
-    {label}
-  </Link>
-);
 
 export default Navbar;

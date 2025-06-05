@@ -1,7 +1,23 @@
 import React from "react";
+<<<<<<< Updated upstream
 import { Link } from "react-router-dom";
+=======
+import ContactForm from "./ContactForm";
 
-const Footer = ({ setIsActive }) => {
+const Footer = () => {
+  const [isActive, setIsActive] = React.useState(false);
+  const toggleActive = () => setIsActive(!isActive);
+
+  // Stop Scroll Behaviour
+  React.useEffect(() => {
+    if (isActive) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [isActive]);
+>>>>>>> Stashed changes
+
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
@@ -135,6 +151,18 @@ const Footer = ({ setIsActive }) => {
           <p className="text-center text-sm">
             © {new Date().getFullYear()} StudiouS. All rights reserved.
           </p>
+        </div>
+      </div>
+      {/* Contact Us Pop Up */}
+      <div
+        className={`fixed top-0 flex items-center justify-center w-full h-screen bg-clip-padding backdrop-filter backdrop-blur-sm duration-300 z-50 ${
+          isActive ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+        } `}
+        aria-modal="true"
+        role="dialog"
+      >
+        <div className="p-4">
+          <ContactForm setIsActive={toggleActive} />
         </div>
       </div>
     </footer>

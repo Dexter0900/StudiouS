@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase.config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 const SignupForm = () => {
@@ -75,7 +75,7 @@ const SignupForm = () => {
     }
 
     try {
-      // ✅ Firebase Auth: Create User
+      // ✅ Create user in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
@@ -83,20 +83,22 @@ const SignupForm = () => {
       );
       const user = userCredential.user;
 
-      // ✅ Firestore: Store extra user data (like name)
+      // ✅ Update displayName in Firebase Auth profile
+      await updateProfile(user, {
+        displayName: `${formData.firstname}`,
+      });
+
+      // ✅ Store extra user data in Firestore
       await setDoc(doc(db, "users", user.uid), {
         firstname: formData.firstname,
         lastname: formData.lastname,
         email: formData.email,
         createdAt: new Date(),
       });
-      console.log("Firestore save done");
 
-      // ✅ Reset form
+      // ✅ Reset form and redirect
       setFormData({ firstname: "", lastname: "", email: "", password: "" });
       setErrors({});
-
-      // ✅ Redirect to homepage
       navigate("/");
     } catch (error) {
       console.error("Signup error:", error.message);
@@ -107,7 +109,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="h-[90vh] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-200">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
