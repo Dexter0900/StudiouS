@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import NavLink from "./NavLink"; // 👈 Import your custom NavLink
+import { Link } from "react-router-dom"; // 👈 Use Link instead of NavLink
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaInfoCircle, FaBookOpen, FaBookmark, FaEnvelope, FaArrowRight } from "react-icons/fa";
@@ -74,16 +74,18 @@ const Hero = () => {
             data-aos-delay="600"
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <NavLink
+            <Link
               to="/signup"
-              label="Get Started"
               className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg"
-            />
-            <NavLink
+            >
+              Get Started
+            </Link>
+            <Link
               to="/about"
-              label="Learn More"
               className="px-8 py-3 border-2 border-indigo-600 text-indigo-600 rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-indigo-50"
-            />
+            >
+              Learn More
+            </Link>
           </div>
         </div>
 
@@ -121,15 +123,14 @@ const Hero = () => {
                     {section.title}
                   </h3>
                   <p className="text-gray-600 mb-4">{section.description}</p>
-                  <NavLink
+                  <Link
                     to={section.link}
-                    label={
-                      <span className="inline-flex items-center">
-                        Learn More <FaArrowRight className="ml-2 w-4 h-4" />
-                      </span>
-                    }
                     className="inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transform transition duration-300 hover:scale-105 hover:shadow-xl hover:border hover:border-gray-300"
-                  />
+                  >
+                    <span className="inline-flex items-center">
+                      Learn More <FaArrowRight className="ml-2 w-4 h-4" />
+                    </span>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -171,16 +172,18 @@ const Hero = () => {
               Join thousands of students who are already learning with StudiouS
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <NavLink
+              <Link
                 to="/signup"
-                label="Sign Up Now"
                 className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg"
-              />
-              <NavLink
+              >
+                Sign Up Now
+              </Link>
+              <Link
                 to="/courses"
-                label="Browse Courses"
                 className="px-8 py-3 border-2 border-indigo-600 text-indigo-600 rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-indigo-50"
-              />
+              >
+                Browse Courses
+              </Link>
             </div>
           </div>
         </div>
