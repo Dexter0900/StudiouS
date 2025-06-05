@@ -14,23 +14,8 @@ const NAV_LINKS = [
 
 const Navbar = () => {
   const auth = getAuth();
-
-  const navigate = useNavigate();
-  const auth = getAuth();
-
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null); // Firebase Auth user
-
-  // Detect scroll to apply styles
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 0);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Listen for auth state changes (user login/logout)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null); // Firebase Auth user
 
@@ -125,69 +110,44 @@ const Navbar = () => {
           >
             StudiouS
           </Link>
-          <Link
-            to="/"
-            className="text-2xl font-bold text-white hover:text-purple-200 transition-colors duration-300 cursor-pointer"
-            onClick={() => setIsMenuOpen(false)}
+
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex flex-1 justify-center items-center space-x-2 mx-8">
+            {NAV_LINKS.map(renderNavLink)}
+            {/* Desktop Auth/User */}
+            <div className="hidden md:flex items-center space-x-4">
+              {currentUser ? renderUserSection() : renderAuthLinks()}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 focus:outline-none"
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? (
+                  <FaTimes className="h-6 w-6" />
+                ) : (
+                  <FaBars className="h-6 w-6" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Menu (animated dropdown) */}
+          <div
+            className={`md:hidden flex flex-col items-center space-y-2 pb-4 transition-max-height duration-300 overflow-hidden ${
+              isMenuOpen ? "max-h-96" : "max-h-0"
+            }`}
           >
-            StudiouS
-          </Link>
-
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex flex-1 justify-center items-center space-x-2 mx-8">
-            {NAV_LINKS.map(renderNavLink)}
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex flex-1 justify-center items-center space-x-2 mx-8">
-            {NAV_LINKS.map(renderNavLink)}
+            <div className="flex flex-col items-center space-y-2 w-full">
+              {NAV_LINKS.map(renderNavLink)}
+            </div>
+            <div className="flex items-center space-x-4 mt-2">
+              {currentUser ? renderUserSection() : renderAuthLinks()}
+            </div>
           </div>
-
-          {/* Desktop Auth/User */}
-          {/* Desktop Auth/User */}
-          <div className="hidden md:flex items-center space-x-4">
-            {currentUser ? renderUserSection() : renderAuthLinks()}
-            {currentUser ? renderUserSection() : renderAuthLinks()}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? (
-                <FaTimes className="h-6 w-6" />
-              ) : (
-                <FaBars className="h-6 w-6" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu (animated dropdown) */}
-        <div
-          className={`md:hidden flex flex-col items-center space-y-2 pb-4 transition-max-height duration-300 overflow-hidden ${
-            isMenuOpen ? "max-h-96" : "max-h-0"
-          }`}
-        >
-          <div className="flex flex-col items-center space-y-2 w-full">
-            {NAV_LINKS.map(renderNavLink)}
-          </div>
-          <div className="flex items-center space-x-4 mt-2">
-            {currentUser ? renderUserSection() : renderAuthLinks()}
-        {/* Mobile Menu (animated dropdown) */}
-        <div
-          className={`md:hidden flex flex-col items-center space-y-2 pb-4 transition-max-height duration-300 overflow-hidden ${
-            isMenuOpen ? "max-h-96" : "max-h-0"
-          }`}
-        >
-          <div className="flex flex-col items-center space-y-2 w-full">
-            {NAV_LINKS.map(renderNavLink)}
-          </div>
-          <div className="flex items-center space-x-4 mt-2">
-            {currentUser ? renderUserSection() : renderAuthLinks()}
-          </div>
-        </div>
         </div>
       </div>
     </nav>
