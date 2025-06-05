@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 // Common navigation links
@@ -49,16 +49,18 @@ const Navbar = () => {
     <>
       <Link
         to="/login"
-        label="Login"
         className="px-4 py-2 text-sm font-medium text-white hover:text-purple-200 transition-colors duration-300"
         onClick={() => setIsMenuOpen(false)}
-      />
+      >
+        Login
+      </Link>
       <Link
         to="/signup"
-        label="Sign Up"
         className="px-4 py-2 text-sm font-medium text-indigo-600 bg-white rounded-md hover:bg-purple-100 focus:outline-none transition-all duration-300 hover:scale-105"
         onClick={() => setIsMenuOpen(false)}
-      />
+      >
+        Sign Up
+      </Link>
     </>
   );
 
@@ -91,10 +93,11 @@ const Navbar = () => {
           {/* Logo */}
           <Link
             to="/"
-            label="StudiouS"
             className="text-2xl font-bold text-white hover:text-purple-200 transition-colors duration-300 cursor-pointer"
             onClick={() => setIsMenuOpen(false)}
-          />
+          >
+            StudiouS
+          </Link>
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex flex-1 justify-center items-center space-x-2 mx-8">
