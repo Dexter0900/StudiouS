@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = ({ setIsActive }) => {
   return (
@@ -57,9 +58,9 @@ const Footer = ({ setIsActive }) => {
             <h3 className="text-white text-lg font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-white">
+                <Link to="/about" className="hover:text-white">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-white">
@@ -99,10 +100,7 @@ const Footer = ({ setIsActive }) => {
                 </a>
               </li>
               <li>
-                <button
-                  onClick={setIsActive}
-                  className="hover:text-white cursor-pointer"
-                >
+                <button onClick={setIsActive} className="hover:text-white cursor-pointer">
                   Contact Us
                 </button>
               </li>
