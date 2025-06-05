@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaTimes, FaSpinner } from "react-icons/fa"; // <-- Add react-icons
 
 const ContactForm = ({ setIsActive }) => {
   const [formData, setFormData] = useState({
@@ -49,20 +50,7 @@ const ContactForm = ({ setIsActive }) => {
           onClick={setIsActive}
           className="p-2 md:bg-white rounded-full cursor-pointer md:border border-gray-400 hover:shadow-lg transition duration-300 hover:scale-110"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-black"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          <FaTimes className="h-5 w-5 text-black" />
         </button>
       </h2>
       <p className="text-gray-600 my-4 text-sm md:text-base">
@@ -85,7 +73,7 @@ const ContactForm = ({ setIsActive }) => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-1 placeholder:text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500"
             placeholder="Your name"
           />
         </div>
@@ -103,7 +91,7 @@ const ContactForm = ({ setIsActive }) => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-1 border placeholder:text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500"
             placeholder="your.email@example.com"
           />
         </div>
@@ -122,7 +110,7 @@ const ContactForm = ({ setIsActive }) => {
             value={formData.subject}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-1 border placeholder:text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500"
             placeholder="What is this regarding?"
           />
         </div>
@@ -141,7 +129,7 @@ const ContactForm = ({ setIsActive }) => {
             onChange={handleChange}
             required
             rows={4}
-            className="mt-1 block w-full px-3 py-2 border placeholder:text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500"
             placeholder="Write your message here..."
           />
         </div>
@@ -153,26 +141,7 @@ const ContactForm = ({ setIsActive }) => {
           >
             {status.type === "loading" ? (
               <span className="flex items-center">
-                <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
+                <FaSpinner className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
                 Sending...
               </span>
             ) : (

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { FaBars, FaTimes } from "react-icons/fa"; // Add these imports
-import { Link, useNavigate } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import NavLink from "./NavLink";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 // Common navigation links
@@ -17,7 +18,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null); // Firebase Auth user
+  const [currentUser, setCurrentUser] = useState(null);
 
   // Detect scroll to apply styles
   useEffect(() => {
@@ -44,35 +45,21 @@ const Navbar = () => {
     }
   };
 
-  // Render a single nav link
-  const renderNavLink = ({ to, label }) => (
-    <Link
-      key={to}
-      to={to}
-      className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-      onClick={() => setIsMenuOpen(false)}
-    >
-      {label}
-    </Link>
-  );
-
   // Render login/signup when user not logged in
   const renderAuthLinks = () => (
     <>
-      <Link
+      <NavLink
         to="/login"
+        label="Login"
         className="px-4 py-2 text-sm font-medium text-white hover:text-purple-200 transition-colors duration-300"
         onClick={() => setIsMenuOpen(false)}
-      >
-        Login
-      </Link>
-      <Link
+      />
+      <NavLink
         to="/signup"
+        label="Sign Up"
         className="px-4 py-2 text-sm font-medium text-indigo-600 bg-white rounded-md hover:bg-purple-100 focus:outline-none transition-all duration-300 hover:scale-105"
         onClick={() => setIsMenuOpen(false)}
-      >
-        Sign Up
-      </Link>
+      />
     </>
   );
 
@@ -103,18 +90,25 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link
+          <NavLink
             to="/"
+            label="StudiouS"
             className="text-2xl font-bold text-white hover:text-purple-200 transition-colors duration-300 cursor-pointer"
             onClick={() => setIsMenuOpen(false)}
-          >
-            StudiouS
-          </Link>
+          />
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex flex-1 justify-center items-center space-x-2 mx-8">
             <div className="flex items-center space-x-2">
-              {NAV_LINKS.map(renderNavLink)}
+              {NAV_LINKS.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  label={link.label}
+                  className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
+                  onClick={() => setIsMenuOpen(false)}
+                />
+              ))}
             </div>
           </div>
           {/* Desktop Auth/User */}
@@ -145,7 +139,15 @@ const Navbar = () => {
           }`}
         >
           <div className="flex flex-col items-center space-y-2 w-full">
-            {NAV_LINKS.map(renderNavLink)}
+            {NAV_LINKS.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                label={link.label}
+                className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
+                onClick={() => setIsMenuOpen(false)}
+              />
+            ))}
           </div>
           <div className="flex items-center space-x-4 mt-2">
             {currentUser ? renderUserSection() : renderAuthLinks()}
