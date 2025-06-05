@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BookmarkButton from "./BookmarkButton";
-import { FaExternalLinkAlt } from "react-icons/fa"; // <-- Add this import
 
 const CourseCard = ({
   title,
@@ -60,7 +59,20 @@ const CourseCard = ({
             className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
           >
             View Material
-            <FaExternalLinkAlt className="ml-2 -mr-1 h-4 w-4" />
+            <svg
+              className="ml-2 -mr-1 h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
           </a>
         </div>
       </div>
