@@ -1,7 +1,5 @@
 import React from "react";
-<<<<<<< Updated upstream
 import { Link } from "react-router-dom";
-=======
 import ContactForm from "./ContactForm";
 
 const Footer = () => {
@@ -16,7 +14,6 @@ const Footer = () => {
       document.body.classList.remove("overflow-hidden");
     }
   }, [isActive]);
->>>>>>> Stashed changes
 
   return (
     <footer className="bg-gray-900 text-gray-300">
@@ -116,7 +113,10 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <button onClick={setIsActive} className="hover:text-white cursor-pointer">
+                <button
+                  onClick={setIsActive}
+                  className="hover:text-white cursor-pointer"
+                >
                   Contact Us
                 </button>
               </li>

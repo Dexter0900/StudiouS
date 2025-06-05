@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-<<<<<<< Updated upstream
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa"; // Add these imports
-=======
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
@@ -14,8 +12,6 @@ const NAV_LINKS = [
   { to: "/bookmarks", label: "Bookmarks" },
   { to: "/admin", label: "Admin" },
 ];
->>>>>>> Stashed changes
-
 const Navbar = () => {
   const auth = getAuth();
 
