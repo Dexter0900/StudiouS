@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 // Common navigation links
@@ -28,11 +28,9 @@ const Navbar = () => {
 
   // Listen for auth state changes (user login/logout)
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
-      setCurrentUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
+    const unsubscribe = onAuthStateChanged(auth, setCurrentUser);
+    return unsubscribe;
+  }, [auth]);
 
   // Logout the current user
   const handleLogout = async () => {
@@ -101,19 +99,18 @@ const Navbar = () => {
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex flex-1 justify-center items-center space-x-2 mx-8">
-            <div className="flex items-center space-x-2">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+            {NAV_LINKS.map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {label}
+              </Link>
+            ))}
           </div>
+
           {/* Desktop Auth/User */}
           <div className="hidden md:flex items-center space-x-4">
             {currentUser ? renderUserSection() : renderAuthLinks()}
@@ -141,18 +138,17 @@ const Navbar = () => {
             isMenuOpen ? "max-h-96" : "max-h-0"
           }`}
         >
-          <div className="flex flex-col items-center space-y-2 w-full">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          {NAV_LINKS.map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {label}
+            </Link>
+          ))}
+
           <div className="flex items-center space-x-4 mt-2">
             {currentUser ? renderUserSection() : renderAuthLinks()}
           </div>
