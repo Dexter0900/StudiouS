@@ -1,10 +1,25 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom"; // 👈 Use Link instead of NavLink
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaInfoCircle, FaBookOpen, FaBookmark, FaEnvelope, FaArrowRight } from "react-icons/fa";
+import {
+  getAuth,
+  onAuthStateChanged,
+} from "firebase/auth";
+
 
 const Hero = () => {
+  const auth = getAuth();
+  const [loggedIn, setLoggedIn] = useState(false);
+    useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) setLoggedIn(true);
+      else setLoggedIn(false);
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -75,10 +90,10 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <Link
-              to="/signup"
+              to={loggedIn ? "/courses" : "/signup"}
               className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg"
             >
-              Get Started
+              {loggedIn ? "Start Learning" : "Get Started"}
             </Link>
             <Link
               to="/about"

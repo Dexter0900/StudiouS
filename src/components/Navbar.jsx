@@ -14,7 +14,7 @@ const NAV_LINKS = [
 
 const Navbar = () => {
   const auth = getAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
