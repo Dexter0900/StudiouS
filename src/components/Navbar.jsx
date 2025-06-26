@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { to: "/about", label: "About" },
   { to: "/courses", label: "Courses" },
   { to: "/bookmarks", label: "Bookmarks" },
-  { to: "/admin", label: "Admin" },
+  // { to: "/admin", label: "Admin" },
 ];
 
 const Navbar = () => {
