@@ -13,19 +13,19 @@ const CourseCard = ({
   // Function to determine badge color based on subject
   const getBadgeColor = (subject) => {
     const colors = {
-      "Web Development": "bg-blue-100 text-blue-800",
-      "Mobile Development": "bg-purple-100 text-purple-800",
-      "Data Science": "bg-green-100 text-green-800",
-      "Machine Learning": "bg-red-100 text-red-800",
-      "Cloud Computing": "bg-yellow-100 text-yellow-800",
+      "Web Development": "bg-blue-900 text-blue-200",
+      "Mobile Development": "bg-purple-900 text-purple-200",
+      "Data Science": "bg-green-900 text-green-200",
+      "Machine Learning": "bg-red-900 text-red-200",
+      "Cloud Computing": "bg-yellow-900 text-yellow-200",
     };
 
     // Default color if subject doesn't match
-    return colors[subject] || "bg-gray-100 text-gray-800";
+    return colors[subject] || "bg-gray-800 text-gray-200";
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 hover:shadow-xl border border-gray-200">
+    <div className="bg-gray-900 rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 hover:shadow-xl border border-gray-800">
       <div className="p-6 space-y-4">
         {/* Subject Badge and Bookmark Button */}
         <div className="flex justify-between items-start">
@@ -43,12 +43,12 @@ const CourseCard = ({
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold text-gray-900 group-hover:text-indigo-600 line-clamp-2">
+        <h3 className="text-xl font-bold text-gray-100 group-hover:text-indigo-400 line-clamp-2">
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-gray-500 text-sm line-clamp-3">{description}</p>
+        <p className="text-gray-300 text-sm line-clamp-3">{description}</p>
 
         {/* View Material Button */}
         <div className="pt-4">

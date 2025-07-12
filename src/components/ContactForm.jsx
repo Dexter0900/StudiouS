@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaTimes, FaSpinner } from "react-icons/fa"; // <-- Add react-icons
+import { FaTimes, FaSpinner } from "react-icons/fa";
 
 const ContactForm = ({ setIsActive }) => {
   const [formData, setFormData] = useState({
@@ -42,18 +42,18 @@ const ContactForm = ({ setIsActive }) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4 bg-white rounded-lg shadow-md border border-gray-200">
-      <h2 className="flex items-center justify-between text-2xl md:text-3xl font-bold text-gray-800">
+    <div className="max-w-lg mx-auto p-4 bg-gray-900 rounded-lg shadow-md border border-gray-800">
+      <h2 className="flex items-center justify-between text-2xl md:text-3xl font-bold text-gray-100">
         Contact Us
         {/* Toggle Button */}
         <button
           onClick={setIsActive}
-          className="p-2 md:bg-white rounded-full cursor-pointer md:border border-gray-400 hover:shadow-lg transition duration-300 hover:scale-110"
+          className="p-2 bg-gray-900 rounded-full cursor-pointer border border-gray-700 hover:shadow-lg transition duration-300 hover:scale-110"
         >
-          <FaTimes className="h-5 w-5 text-black" />
+          <FaTimes className="h-5 w-5 text-gray-200" />
         </button>
       </h2>
-      <p className="text-gray-600 my-4 text-sm md:text-base">
+      <p className="text-gray-300 my-4 text-sm md:text-base">
         Have a question or want to get in touch? Fill out the form below and
         we'll get back to you as soon as possible.
       </p>
@@ -62,7 +62,7 @@ const ContactForm = ({ setIsActive }) => {
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-200"
           >
             Name
           </label>
@@ -73,7 +73,7 @@ const ContactForm = ({ setIsActive }) => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 bg-gray-800 text-gray-100"
             placeholder="Your name"
           />
         </div>
@@ -81,7 +81,7 @@ const ContactForm = ({ setIsActive }) => {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-200"
           >
             Email
           </label>
@@ -91,7 +91,7 @@ const ContactForm = ({ setIsActive }) => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 bg-gray-800 text-gray-100"
             placeholder="your.email@example.com"
           />
         </div>
@@ -99,7 +99,7 @@ const ContactForm = ({ setIsActive }) => {
         <div>
           <label
             htmlFor="subject"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-200"
           >
             Subject
           </label>
@@ -110,7 +110,7 @@ const ContactForm = ({ setIsActive }) => {
             value={formData.subject}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 bg-gray-800 text-gray-100"
             placeholder="What is this regarding?"
           />
         </div>
@@ -118,7 +118,7 @@ const ContactForm = ({ setIsActive }) => {
         <div>
           <label
             htmlFor="message"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-200"
           >
             Message
           </label>
@@ -129,7 +129,7 @@ const ContactForm = ({ setIsActive }) => {
             onChange={handleChange}
             required
             rows={4}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 bg-gray-800 text-gray-100"
             placeholder="Write your message here..."
           />
         </div>
@@ -154,8 +154,8 @@ const ContactForm = ({ setIsActive }) => {
           <div
             className={`mt-4 p-4 rounded-md ${
               status.type === "success"
-                ? "bg-green-50 text-green-800"
-                : "bg-red-50 text-red-800"
+                ? "bg-green-900/30 text-green-300"
+                : "bg-red-900/30 text-red-300"
             }`}
           >
             {status.message}

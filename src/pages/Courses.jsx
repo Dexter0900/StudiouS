@@ -63,17 +63,21 @@ const Courses = () => {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 to-blue-950">
       <Navbar />
+      {/* Top Spacer for Navbar */}
+      <div className="h-8 sm:h-16" />
       <main className="flex-grow py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Our Courses</h1>
+          <h1 className="text-4xl font-bold text-gray-100 mb-8">Our Courses</h1>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <div className="flex-1">
               <SearchBar
                 onSearch={handleSearch}
                 placeholder="Search courses..."
+                inputClassName="bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500"
+                // Pass extra className for dark theme
               />
             </div>
             <div className="w-full sm:w-48">
@@ -82,6 +86,8 @@ const Courses = () => {
                 selected={selectedFilter}
                 onChange={handleFilterChange}
                 label="Filter by category"
+                selectClassName="bg-gray-800 text-gray-100 border border-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
+                // Pass extra className for dark theme
               />
             </div>
           </div>
@@ -89,6 +95,8 @@ const Courses = () => {
           <CourseList courses={filteredCourses} />
         </div>
       </main>
+      {/* Bottom Spacer for Footer */}
+      <div className="h-8 sm:h-16" />
       <Footer />
     </div>
   );
