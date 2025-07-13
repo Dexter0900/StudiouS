@@ -134,24 +134,33 @@ const Navbar = () => {
 
         {/* Mobile Menu (animated dropdown) */}
         <div
-          className={`md:hidden flex flex-col items-center space-y-2 pb-4 transition-max-height duration-300 overflow-hidden ${
-            isMenuOpen ? "max-h-96" : "max-h-0"
+          className={`md:hidden overflow-hidden transition-all duration-300 ${
+            isMenuOpen
+              ? "max-h-[500px] opacity-100 py-2"
+              : "max-h-0 opacity-0 py-0"
           }`}
+          style={{
+            transitionProperty: "max-height, opacity, padding",
+          }}
         >
-          {NAV_LINKS.map(({ to, label }) => (
-            <Link
-              key={to}
-              to={to}
-              className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {label}
-            </Link>
-          ))}
+          {isMenuOpen && (
+            <div className="flex flex-col items-center space-y-2 pb-2">
+              {NAV_LINKS.map(({ to, label }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  className="text-white hover:text-purple-200 px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {label}
+                </Link>
+              ))}
 
-          <div className="flex items-center space-x-4 mt-2">
-            {currentUser ? renderUserSection() : renderAuthLinks()}
-          </div>
+              <div className="flex items-center space-x-4 mt-2">
+                {currentUser ? renderUserSection() : renderAuthLinks()}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>
