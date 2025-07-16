@@ -147,7 +147,10 @@ const Navbar = () => {
             <Link
               to="/"
               className="text-2xl font-bold text-white hover:text-purple-200 transition-colors duration-300 cursor-pointer"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => {
+                setIsMenuOpen(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
             >
               StudiouS
             </Link>
