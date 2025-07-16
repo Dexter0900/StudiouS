@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-export const useLoginFormLogic = () => {
+export const useLoginFormLogic = (onClose) => {
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -74,6 +74,7 @@ export const useLoginFormLogic = () => {
     try {
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
       // Successful login redirects from onAuthStateChanged
+      onClose?.();
     } catch (error) {
       let friendlyMsg = error.message;
       if (

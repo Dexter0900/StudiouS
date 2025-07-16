@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const Hero = () => {
+const Hero = ({ setShowSignupModal }) => {
   const auth = getAuth();
   const [loggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
@@ -91,12 +91,21 @@ const Hero = () => {
             data-aos-delay="600"
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Link
-              to={loggedIn ? "/courses" : "/signup"}
-              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg"
-            >
-              {loggedIn ? "Start Learning" : "Get Started"}
-            </Link>
+            {loggedIn ? (
+              <Link
+                to="/courses"
+                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg"
+              >
+                Start Learning
+              </Link>
+            ) : (
+              <button
+                onClick={() => setShowSignupModal(true)}
+                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg"
+              >
+                Get Started
+              </button>
+            )}
             <Link
               to="/about"
               className="px-8 py-3 border-2 border-indigo-400 text-indigo-300 rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-indigo-900/30"
@@ -193,12 +202,12 @@ const Hero = () => {
               Join thousands of students who are already learning with StudiouS
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/signup"
+              <button
+                onClick={() => setShowSignupModal(true)}
                 className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg"
               >
                 Sign Up Now
-              </Link>
+              </button>
               <Link
                 to="/courses"
                 className="px-8 py-3 border-2 border-indigo-400 text-indigo-300 rounded-lg text-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-indigo-900/30"

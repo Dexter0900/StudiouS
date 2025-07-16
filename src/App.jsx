@@ -1,18 +1,19 @@
-import React from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Footer from "./components/Footer";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import Courses from "./pages/Courses";
 import Bookmarks from "./pages/Bookmarks";
-import Admin from "./pages/Admin";
 import About from "./pages/About";
 import { BookmarkProvider } from "./context/BookmarkContext";
+import SignupForm from "./components/SignupForm";
+import LoginForm from "./components/Login/LoginForm";
 
 function App() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
   return (
     <BookmarkProvider>
       <Router>
@@ -21,19 +22,29 @@ function App() {
             path="/"
             element={
               <div className="min-h-screen bg-gray-50 flex flex-col">
-                <Navbar />
+                <Navbar setShowSignupModal={setShowSignupModal} />
                 <main className="relative overflow-hidden flex-grow">
-                  <Hero />
+                  <Hero setShowSignupModal={setShowSignupModal} />
+                  {showSignupModal && (
+                    <SignupForm
+                      onClose={() => setShowSignupModal(false)}
+                      openLoginModal={() => {
+                        setShowSignupModal(false);
+                        setShowLoginModal(true);
+                      }}
+                    />
+                  )}
+
+                  {showLoginModal && (
+                    <LoginForm onClose={() => setShowLoginModal(false)} />
+                  )}
                 </main>
                 <Footer />
               </div>
             }
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
-          {/* <Route path="/admin" element={<Admin />} /> */}
           <Route path="/about" element={<About />} />
         </Routes>
       </Router>
