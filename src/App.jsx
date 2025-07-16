@@ -10,6 +10,7 @@ import About from "./pages/About";
 import { BookmarkProvider } from "./context/BookmarkContext";
 import SignupForm from "./components/SignupForm";
 import LoginForm from "./components/Login/LoginForm";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -17,6 +18,7 @@ function App() {
   return (
     <BookmarkProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route
             path="/"
