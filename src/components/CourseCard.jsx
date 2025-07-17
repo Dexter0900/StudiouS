@@ -10,7 +10,7 @@ const CourseCard = ({
   isBookmarked,
   onToggleBookmark,
 }) => {
-  // Function to determine badge color based on subject
+  // 🎨 Badge color based on subject
   const getBadgeColor = (subject) => {
     const colors = {
       "Web Development": "bg-blue-900 text-blue-200",
@@ -19,18 +19,16 @@ const CourseCard = ({
       "Machine Learning": "bg-red-900 text-red-200",
       "Cloud Computing": "bg-yellow-900 text-yellow-200",
     };
-
-    // Default color if subject doesn't match
-    return colors[subject] || "bg-gray-800 text-gray-200";
+    return colors[subject] || "bg-gray-800 text-gray-200"; // fallback
   };
 
   return (
-    <div className="bg-gray-900 rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 hover:shadow-xl border border-gray-800">
+    <div className="bg-gray-900 rounded-xl shadow-md overflow-hidden border border-gray-800 hover:scale-105 hover:shadow-xl transition-transform duration-300">
       <div className="p-6 space-y-4">
-        {/* Subject Badge and Bookmark Button */}
+        {/* Badge + Bookmark */}
         <div className="flex justify-between items-start">
           <span
-            className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getBadgeColor(
+            className={`inline-flex px-3 py-1 rounded-full text-sm font-medium ${getBadgeColor(
               subject
             )}`}
           >
@@ -43,20 +41,20 @@ const CourseCard = ({
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold text-gray-100 group-hover:text-indigo-400 line-clamp-2">
+        <h3 className="text-xl font-bold text-gray-100 line-clamp-2">
           {title}
         </h3>
 
         {/* Description */}
         <p className="text-gray-300 text-sm line-clamp-3">{description}</p>
 
-        {/* View Material Button */}
+        {/* View Material */}
         <div className="pt-4">
           <a
             href={downloadLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
+            className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
           >
             View Material
             <svg
@@ -64,7 +62,6 @@ const CourseCard = ({
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
@@ -80,6 +77,7 @@ const CourseCard = ({
   );
 };
 
+// ✅ PropTypes
 CourseCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

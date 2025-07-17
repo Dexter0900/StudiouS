@@ -6,6 +6,7 @@ import { useBookmarks } from "../context/BookmarkContext";
 const CourseList = ({ courses }) => {
   const { toggleBookmark, isBookmarked } = useBookmarks();
 
+  // 🪄 If no courses
   if (!courses?.length) {
     return (
       <div className="min-h-[400px] flex items-center justify-center bg-gray-900 rounded-lg border border-gray-800">
@@ -15,7 +16,6 @@ const CourseList = ({ courses }) => {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               strokeLinecap="round"
@@ -28,7 +28,7 @@ const CourseList = ({ courses }) => {
             No courses available
           </h3>
           <p className="mt-1 text-sm text-gray-400">
-            Check back later for new courses or try refreshing the page.
+            Check back later or try refreshing.
           </p>
         </div>
       </div>
@@ -54,6 +54,7 @@ const CourseList = ({ courses }) => {
   );
 };
 
+// ✅ PropTypes
 CourseList.propTypes = {
   courses: PropTypes.arrayOf(
     PropTypes.shape({
