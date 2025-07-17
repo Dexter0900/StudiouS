@@ -4,6 +4,7 @@ import SearchBar from "../components/SearchBar";
 import DropdownFilter from "../components/DropdownFilter";
 import CourseList from "../components/CourseList";
 import Footer from "../components/Footer";
+import { FiArrowUp } from "react-icons/fi";
 
 const Courses = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -94,6 +95,12 @@ const Courses = () => {
 
           <CourseList courses={filteredCourses} />
         </div>
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 bg-indigo-600 hover:bg-indigo-700 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg transition"
+        >
+          <FiArrowUp className="w-5 h-5" />
+        </button>
       </main>
       {/* Bottom Spacer for Footer */}
       <div className="h-8 sm:h-16" />

@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import CourseList from "../components/CourseList";
 import Footer from "../components/Footer";
 import { useBookmarks } from "../context/BookmarkContext";
+import { FiArrowUp } from "react-icons/fi";
 
 // Example courses data (in a real app, this would come from your backend)
 const allCourses = [
@@ -71,6 +72,12 @@ const Bookmarks = () => {
             <CourseList courses={bookmarkedCourses} />
           )}
         </div>
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 bg-indigo-600 hover:bg-indigo-700 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg transition"
+        >
+          <FiArrowUp className="w-5 h-5" />
+        </button>
       </main>
       {/* Bottom Spacer for Footer */}
       <div className="h-8 sm:h-16" />
