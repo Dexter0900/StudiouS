@@ -15,7 +15,11 @@ export const BookmarkProvider = ({ children }) => {
   // Initialize bookmarks from localStorage if available
   const [bookmarkedCourses, setBookmarkedCourses] = useState(() => {
     const saved = localStorage.getItem("bookmarkedCourses");
-    return saved ? new Set(JSON.parse(saved)) : new Set();
+    try {
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    } catch {
+      return new Set();
+    }
   });
 
   // Save bookmarks to localStorage whenever they change
@@ -28,13 +32,13 @@ export const BookmarkProvider = ({ children }) => {
 
   const toggleBookmark = (courseId) => {
     setBookmarkedCourses((prev) => {
-      const newBookmarks = new Set(prev);
-      if (newBookmarks.has(courseId)) {
-        newBookmarks.delete(courseId);
+      const updated = new Set(prev);
+      if (updated.has(courseId)) {
+        updated.delete(courseId);
       } else {
-        newBookmarks.add(courseId);
+        updated.add(courseId);
       }
-      return newBookmarks;
+      return updated;
     });
   };
 
@@ -42,13 +46,17 @@ export const BookmarkProvider = ({ children }) => {
     return bookmarkedCourses.has(courseId);
   };
 
-  const getBookmarkedCourses = (allCourses) => {
-    return allCourses.filter((course) => bookmarkedCourses.has(course.id));
-  };
+  const getBookmarkedCourses = (allCourses) =>
+    allCourses.filter((course) => bookmarkedCourses.has(course.id));
 
   return (
     <BookmarkContext.Provider
-      value={{ toggleBookmark, isBookmarked, getBookmarkedCourses }}
+      value={{
+        toggleBookmark,
+        isBookmarked,
+        getBookmarkedCourses,
+        bookmarkedCourseIds: bookmarkedCourses,
+      }}
     >
       {children}
     </BookmarkContext.Provider>

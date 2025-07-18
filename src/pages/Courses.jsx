@@ -7,12 +7,13 @@ import DropdownFilter from "../components/DropdownFilter";
 import CourseList from "../components/CourseList";
 import Footer from "../components/Footer";
 import { FiArrowUp } from "react-icons/fi";
-import { data } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const Courses = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const filterOptions = [
     "All",
@@ -26,10 +27,18 @@ const Courses = () => {
   // 🔷 Fetch courses from Firestore
   useEffect(() => {
     const fetchCourses = async () => {
-      const snapshot = await getDocs(collection(db, "courses"));
-      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setCourses(data);
-      console.log("Courses fetched:", data);
+      try {
+        const snapshot = await getDocs(collection(db, "courses"));
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setCourses(data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchCourses();
   }, []);

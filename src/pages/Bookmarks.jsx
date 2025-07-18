@@ -1,38 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import CourseList from "../components/CourseList";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import { useBookmarks } from "../context/BookmarkContext";
 import { FiArrowUp } from "react-icons/fi";
-
-// Example courses data (in a real app, this would come from your backend)
-const allCourses = [
-  {
-    id: 1,
-    title: "Advanced Web Development",
-    description: "Master modern web technologies and frameworks",
-    subject: "Web Development",
-    downloadLink: "/materials/advanced-web-dev",
-  },
-  {
-    id: 2,
-    title: "Machine Learning Fundamentals",
-    description: "Introduction to machine learning concepts and applications",
-    subject: "Machine Learning",
-    downloadLink: "/materials/ml-fundamentals",
-  },
-  // Add more courses as needed
-];
+import { db } from "../firebase.config";
+import { collection, getDocs } from "firebase/firestore";
 
 const Bookmarks = () => {
-  const { getBookmarkedCourses } = useBookmarks();
-  const bookmarkedCourses = getBookmarkedCourses(allCourses);
+  const { bookmarkedCourseIds } = useBookmarks(); // update context to expose ids set
+  const [allCourses, setAllCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch all courses from Firestore
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "courses"));
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAllCourses(data);
+      } catch (err) {
+        console.error("Error fetching courses:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCourses();
+  }, []);
+
+  const bookmarkedCourses = allCourses.filter((course) =>
+    bookmarkedCourseIds.has(course.id)
+  );
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 to-blue-950">
       <Navbar />
-      {/* Top Spacer for Navbar */}
+
       <div className="h-8 sm:h-16" />
+
       <main className="flex-grow py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-8">
@@ -42,7 +51,9 @@ const Bookmarks = () => {
             </span>
           </div>
 
-          {bookmarkedCourses.length === 0 ? (
+          {loading ? (
+            <Loader />
+          ) : bookmarkedCourses.length === 0 ? (
             <div className="text-center py-12">
               <div className="flex flex-col items-center">
                 <svg
@@ -72,6 +83,7 @@ const Bookmarks = () => {
             <CourseList courses={bookmarkedCourses} />
           )}
         </div>
+
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="fixed bottom-6 right-6 bg-indigo-600 hover:bg-indigo-700 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg transition"
@@ -79,7 +91,7 @@ const Bookmarks = () => {
           <FiArrowUp className="w-5 h-5" />
         </button>
       </main>
-      {/* Bottom Spacer for Footer */}
+
       <div className="h-8 sm:h-16" />
       <Footer />
     </div>
